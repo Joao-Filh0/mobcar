@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blue,
                 ),
                 Text(
-                  "mob_car_2",
+                  "mob car",
                   style: TextStyle(color: Colors.blue, fontSize: 10.0),
                 )
               ],
@@ -73,8 +73,8 @@ class _HomePageState extends State<HomePage> {
                    const Text("Title 2", style: TextStyle(fontSize: 17.0)),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {
-                        _getCarDb.getAllCars();
+                      onPressed: () async{
+                        await _getCarDb.getAllCars();
                         registerCarHome(context,
                             url:
                             "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg");

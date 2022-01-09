@@ -7,12 +7,10 @@ class GetCarDb{
 
 
   getAllCars() async {
-
-    var apiResponse = await ParseObject('Cars').getAll();
-
-    if (apiResponse.success){
-     print(apiResponse.results);
-    }
+    var dietPlan = ParseObject('Cars')
+      ..set('Name', 'Ketogenic')
+      ..set('Fat', 65);
+    await dietPlan.save();
 
 
 }

@@ -134,7 +134,8 @@ Future<void> registerCarHome(BuildContext context,
                           alignment:  Alignment.centerLeft,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child:  Text(snapshot.data!),
+                            child:  Text(snapshot.data!,
+                            style: TextStyle(fontSize: 10.0),),
                           ))
                   ),
                 );
