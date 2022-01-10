@@ -1,10 +1,8 @@
-class RomSearchEntity {
-  String titleRom;
-  String urlRom;
-  String titleConsole;
+class YearEntity {
+  String name;
+  String code;
 
-  RomSearchEntity(
-      {required this.titleRom,
-      required this.urlRom,
-      required this.titleConsole});
+  YearEntity(
+      {required this.name,
+      required this.code });
 }

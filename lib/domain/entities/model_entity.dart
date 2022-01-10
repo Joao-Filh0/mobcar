@@ -1,6 +1,6 @@
-class ConsoleEntity {
-  String titleConsole;
-  String urlConsole;
+class ModelEntity {
+  String name;
+  String code;
 
-  ConsoleEntity({required this.titleConsole, required this.urlConsole});
+  ModelEntity({required this.name, required this.code});
 }

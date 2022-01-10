@@ -4,7 +4,7 @@
 
 abstract class GetDataRepository<T>{
 
-  Future<T> get(List codes);
+  Future<T?> get(List codes);
 
 
 

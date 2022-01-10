@@ -1,6 +1,6 @@
-class RomEntity {
-  String titleRom;
-  String urlRom;
+class BrandEntity {
+  String name;
+  String code;
 
-  RomEntity({required this.titleRom, required this.urlRom});
+  BrandEntity({required this.name, required this.code});
 }
