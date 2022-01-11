@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget menuItemHome(BuildContext context ,{required VoidCallback create,
+Widget menuItemHome(BuildContext context ,{required VoidCallback view,
   required VoidCallback edit,
   required VoidCallback delete
 }){
@@ -12,7 +12,7 @@ Widget menuItemHome(BuildContext context ,{required VoidCallback create,
         child: Text("View"),
         onTap: () {
           Future.delayed(Duration(microseconds: 1))
-              .then((_) => create());
+              .then((_) => view());
         },
       ),
       PopupMenuItem(child: Text("Edit"),onTap:(){

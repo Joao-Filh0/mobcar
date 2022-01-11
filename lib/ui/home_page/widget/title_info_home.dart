@@ -5,14 +5,14 @@ import 'menu_item_home.dart';
 
 
 class TitleInfoHome extends StatelessWidget {
-  final VoidCallback create;
+  final VoidCallback view;
   final VoidCallback edit;
   final VoidCallback delete;
   final String title;
   final String year;
   const TitleInfoHome({Key? key,
     required this.title, required this.year,
-    required this.create,
+    required this.view,
     required this.edit, required this.delete})
       : super(key: key);
 
@@ -44,7 +44,7 @@ class TitleInfoHome extends StatelessWidget {
                   style: TextStyle(color: Color(0xF705D7EA)))
             ],
           ),
-          trailing: menuItemHome(context,create: create,
+          trailing: menuItemHome(context,view: view,
             delete: delete,
             edit: edit,)
         ),

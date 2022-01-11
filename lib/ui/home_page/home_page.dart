@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mob_car_2/db_developer_test/get_car_db.dart';
 import 'package:mob_car_2/ui/home_page/widget/drawer_home.dart';
 import 'package:mob_car_2/ui/home_page/widget/register_car_home.dart';
+import 'package:mob_car_2/ui/home_page/widget/reserve_car_home.dart';
 import 'package:mob_car_2/ui/home_page/widget/title_info_home.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,74 +62,60 @@ class _HomePageState extends State<HomePage> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-              const  Text(
-                  "Title 1",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-                Row(
+            child: FutureBuilder<List<dynamic>>(
+              future: _getCarDb.getAllCars(),
+              builder: (context, snapshot) {
+                if(!snapshot.hasData){
+                  return Container(color: Colors.red);
+                }
+                return ListView(
+
                   children: [
-                   const Text("Title 2", style: TextStyle(fontSize: 17.0)),
-                    Spacer(),
-                    ElevatedButton(
-                      onPressed: () async{
-                        await _getCarDb.getAllCars();
-                        registerCarHome(context,
-                            url:
-                            "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg");
-
-                      },
-                      child: const Text(
-                        "Add new",
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9.0),
-                            ),
-                          )),
+                  const  Text(
+                      "Title 1",
+                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
-                  ],
-                ),
-                TitleInfoHome(
-                    title: "SUV",
-                    year: "2020",
-                    create: () {},
-                    edit: () {
-                      registerCarHome(context,
-                          url:
-                              "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
-                      );
-                    },
-                    delete: () {}),
-                TitleInfoHome(
-                    title: "SUV",
-                    year: "2020",
-                    create: () {},
-                    edit: () {
-                      registerCarHome(context,
-                          url:
-                              "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
+                    Row(
+                      children: [
+                       const Text("Title 2", style: TextStyle(fontSize: 17.0)),
+                        Spacer(),
+                        ElevatedButton(
+                          onPressed: () async{
 
-                      ); },
-                    delete: () {}),
-                TitleInfoHome(
-                    title: "SUV",
-                    year: "2020",
-                    create: () {},
-                    edit: () {
-                      registerCarHome(context,
-                          url:
-                              "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
-                     );
-                    },
-                    delete: () {}),
-              ],
+                            registerCarHome(context,
+                                url:
+                                "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg");
+
+                          },
+                          child: const Text(
+                            "Add new",
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.black),
+                              shape:
+                                  MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                    ...snapshot.data!.map<TitleInfoHome>((e) =>TitleInfoHome(
+                        title: e["Modelo"],
+                        year: e["AnoModelo"].toString(),
+                        view: () {},
+                        edit: () {
+                          reserveCarHome(context,
+                            url:
+                            "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
+                          );
+                        },
+                        delete: () {}), ).toList()
+                  ],
+                );
+              }
             ),
           )),
     );
