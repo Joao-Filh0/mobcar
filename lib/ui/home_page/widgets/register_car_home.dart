@@ -2,10 +2,16 @@ import 'dart:async';
 
 import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:mob_car_2/data/remote/get_brand_data.dart';
+import 'package:mob_car_2/data/remote/get_model_data.dart';
 import 'package:mob_car_2/data/remote/get_price_data.dart';
+import 'package:mob_car_2/data/remote/get_year_data.dart';
+import 'package:mob_car_2/data/repositories/get_brand_data_repository.dart';
 import 'package:mob_car_2/data/repositories/get_data_repository.dart';
-import 'package:mob_car_2/data_developer_test/get_cars.dart';
+import 'package:mob_car_2/domain/entities/brand_entity.dart';
+import 'package:mob_car_2/domain/entities/model_entity.dart';
 import 'package:mob_car_2/domain/entities/price_entity.dart';
+import 'package:mob_car_2/domain/entities/year_entity.dart';
 import 'package:mob_car_2/presentation/bloc/bloc_validator.dart';
 import 'package:mob_car_2/ui/home_page/widgets/custom_button.dart';
 import 'package:mob_car_2/ui/home_page/widgets/custom_drop_down.dart';
@@ -20,8 +26,10 @@ Future<void> registerCarHome(BuildContext context,
   required Function(PriceEntity) onPressed
 
 }) async {
-  GetCars getCars = GetCars();
   GetDataRepository _getPriceData = GetPriceData() ;
+  GetDataRepository<List<YearEntity>> _getYearData = GetYearData() ;
+  GetDataRepository<List<ModelEntity>> _getModelData = GetModelData();
+  GetBrandDataRepository<List<BrandEntity>>  _getBrandData = GetBrandData();
   final BlocValidator  blocValidator = BlocProvider.of<BlocValidator>(context);
   PriceEntity? _data;
 
@@ -68,10 +76,10 @@ Future<void> registerCarHome(BuildContext context,
                                url, fit : BoxFit.fill
                             ),
                           )),
-                      FutureBuilder<List<dynamic>>(
-                        future: getCars.getMarca(),
+                      FutureBuilder<List<BrandEntity>?>(
+                        future: _getBrandData.get(),
                           builder: (context,snapshot){
-                          if(!snapshot.hasData) {
+                          if(!snapshot.hasData|| snapshot.data!.isEmpty) {
                             return const SizedBox();
                           }
 
@@ -87,11 +95,10 @@ Future<void> registerCarHome(BuildContext context,
                     initialData: "59",
                     stream: blocValidator.getValidatorForModel,
                     builder: (context, code) {
-                      print(code.data!);
-                      return FutureBuilder<List<dynamic>>(
-                        future: getCars.getModelo(code.data!),
+                      return FutureBuilder<List<ModelEntity>?>(
+                        future: _getModelData.get([code.data]),
                         builder: (context, snapshot) {
-                          if(!snapshot.hasData) {
+                          if(!snapshot.hasData || snapshot.data!.isEmpty) {
                             return const SizedBox();
                           }
                           return CustomdropDownMenuItem("Modelo",snapshot.data!,
@@ -105,10 +112,10 @@ Future<void> registerCarHome(BuildContext context,
                           initialData: const  ["59","5940"],
                           stream: blocValidator.getValidatorForYear,
                           builder: (context, code) {
-                            return FutureBuilder<List<dynamic>>(
-                                future: getCars.getAno(code.data!),
+                            return FutureBuilder<List<YearEntity>?>(
+                                future: _getYearData.get(code.data!),
                                 builder: (context, snapshot) {
-                                  if(!snapshot.hasData) {
+                                  if(!snapshot.hasData || snapshot.data!.isEmpty) {
                                     return const SizedBox();
                                   }
                                   return CustomdropDownMenuItem("Ano",snapshot.data!,
@@ -151,7 +158,7 @@ Future<void> registerCarHome(BuildContext context,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Button(text : "Cancelar",onPressed: (){
                             Navigator.of(context).pop();
                           },
@@ -164,6 +171,7 @@ Future<void> registerCarHome(BuildContext context,
                               return Button(text : "Salvar",onPressed:
                               !snapshot.data!
                                   ? null : (){
+
                                 onPressed(
                                    _data!);
                               }, backGroundColor: Colors.black);

@@ -72,14 +72,16 @@ class _HomePageState extends State<HomePage>
                           const Spacer(),
                           ElevatedButton(
                             onPressed: () async {
+
                               //Essa variavel esta aqui pois a api nao tem url mas o layout pede imagem
                               const String url =
                                   "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg";
 
                               registerCarHome(context,
                                   url: url,
-                                  onPressed: (value) =>
-                                      _homePresenter.create(value));
+                                  onPressed: (value){
+                                    Navigator.of(context).pop();
+                                      _homePresenter.create(value);});
                             },
                             child: const Text(
                               "Add new",
@@ -162,7 +164,7 @@ class _HomePageState extends State<HomePage>
       duration: const Duration(seconds: 2),
     );
     _blocValidator.setHomeController.add(true);
-    Navigator.of(context).pop();
+
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

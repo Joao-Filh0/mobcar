@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -53,10 +52,10 @@ class CustomdropDownMenuItem extends StatelessWidget {
           },
           items : items.map(( location) {
             return DropdownMenuItem<String>(
-              value: '${location["codigo"]}=${location["nome"]}',
+              value: '${location.code}=${location.code}',
               child: Padding(
                 padding: const EdgeInsets.only(left : 18.0),
-                child: Text(location["nome"],overflow: TextOverflow.ellipsis,),
+                child: Text(location.name,overflow: TextOverflow.ellipsis,),
               ),
             );
           }).toList(),
