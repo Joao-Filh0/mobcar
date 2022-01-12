@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc_provider/bloc_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mob_car_2/data/remote/get_price_data.dart';
+import 'package:mob_car_2/data/repositories/get_data_repository.dart';
 import 'package:mob_car_2/data_developer_test/get_cars.dart';
-import 'package:mob_car_2/ui/home_page/bloc/bloc_validator.dart';
-import 'package:mob_car_2/ui/home_page/widget/custom_button.dart';
-import 'package:mob_car_2/ui/home_page/widget/custom_drop_down.dart';
+import 'package:mob_car_2/domain/entities/price_entity.dart';
+import 'package:mob_car_2/presentation/bloc/bloc_validator.dart';
+import 'package:mob_car_2/ui/home_page/widgets/custom_button.dart';
+import 'package:mob_car_2/ui/home_page/widgets/custom_drop_down.dart';
 
 
 
@@ -14,11 +16,16 @@ import 'package:mob_car_2/ui/home_page/widget/custom_drop_down.dart';
 
 
 Future<void> registerCarHome(BuildContext context,
-{required String url
+{required String url,
+  required Function(PriceEntity) onPressed
 
 }) async {
   GetCars getCars = GetCars();
+  GetDataRepository _getPriceData = GetPriceData() ;
   final BlocValidator  blocValidator = BlocProvider.of<BlocValidator>(context);
+  PriceEntity? _data;
+
+
 
 
 
@@ -49,7 +56,7 @@ Future<void> registerCarHome(BuildContext context,
                             child: Icon(Icons.directions_car),
                           ),
                           const Text("Title",style: TextStyle(fontWeight: FontWeight.bold),) ,
-                          Spacer(),IconButton(onPressed: (){},icon: Icon(Icons.close))
+                          Spacer(),IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: Icon(Icons.close))
                         ],
                       ),
                       ClipRRect(
@@ -58,8 +65,7 @@ Future<void> registerCarHome(BuildContext context,
                             height: 130.0,
 
                             child: Image.network(
-                                "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
-                                fit : BoxFit.fill
+                               url, fit : BoxFit.fill
                             ),
                           )),
                       FutureBuilder<List<dynamic>>(
@@ -99,7 +105,6 @@ Future<void> registerCarHome(BuildContext context,
                           initialData: const  ["59","5940"],
                           stream: blocValidator.getValidatorForYear,
                           builder: (context, code) {
-                            print(code.data!);
                             return FutureBuilder<List<dynamic>>(
                                 future: getCars.getAno(code.data!),
                                 builder: (context, snapshot) {
@@ -110,8 +115,10 @@ Future<void> registerCarHome(BuildContext context,
                                           (value)async{
                                     List codes = code.data!;
                                     codes.add(value);
-                                    var result = await getCars.getValor(codes);
-                                    blocValidator.setValidatorForValue.add(result["Valor"].toString());}
+                                     _data = await _getPriceData.get(codes);
+                                    blocValidator.setValidatorForValue.add(_data!.price.toString());
+                                    blocValidator.setvalidatorButton.add(true);
+                                  }
                                   );
                                 }
                             );
@@ -127,7 +134,7 @@ Future<void> registerCarHome(BuildContext context,
                   child: Container(
                       height: 30,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0),),
+                          borderRadius: const BorderRadius.all(Radius.circular(8.0),),
                           border: Border.all(color: Colors.black)
                       ),
                       child: Align(
@@ -135,7 +142,7 @@ Future<void> registerCarHome(BuildContext context,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child:  Text(snapshot.data!,
-                            style: TextStyle(fontSize: 13.0),overflow: TextOverflow.ellipsis,),
+                            style: const  TextStyle(fontSize: 13.0),overflow: TextOverflow.ellipsis,),
                           ))
                   ),
                 );
@@ -145,10 +152,23 @@ Future<void> registerCarHome(BuildContext context,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Spacer(),
-                          Button(text : "Cancelar",onPressed: (){},
+                          Button(text : "Cancelar",onPressed: (){
+                            Navigator.of(context).pop();
+                          },
                               backGroundColor: Colors.white,border: Colors.black,
                               colorText: Colors.black),
-                          Button(text : "Salvar",onPressed: (){}, backGroundColor: Colors.black)
+                          StreamBuilder<bool>(
+                            initialData: false,
+                            stream:blocValidator.getvalidatorButton ,
+                            builder: (context, snapshot) {
+                              return Button(text : "Salvar",onPressed:
+                              !snapshot.data!
+                                  ? null : (){
+                                onPressed(
+                                   _data!);
+                              }, backGroundColor: Colors.black);
+                            }
+                          )
 
                         ],
                       )

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget menuItemHome(BuildContext context ,{required VoidCallback view,
   required VoidCallback edit,
-  required VoidCallback delete
+  required VoidCallback delete,
 }){
 
   return PopupMenuButton(
@@ -19,7 +19,8 @@ Widget menuItemHome(BuildContext context ,{required VoidCallback view,
         Future.delayed(Duration(microseconds: 1))
             .then((_) => edit());
       },),
-      PopupMenuItem(child: Text("Delete"))
+      PopupMenuItem(child: Text("Delete"),
+      onTap: delete,)
     ];
   },
 );}

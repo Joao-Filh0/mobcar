@@ -9,11 +9,13 @@ class TitleInfoHome extends StatelessWidget {
   final VoidCallback edit;
   final VoidCallback delete;
   final String title;
+  final String url;
   final String year;
   const TitleInfoHome({Key? key,
     required this.title, required this.year,
     required this.view,
-    required this.edit, required this.delete})
+    required this.edit, required this.delete,
+    required this.url})
       : super(key: key);
 
   @override
@@ -29,9 +31,9 @@ class TitleInfoHome extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               child: Container(
                 height: 48,
-                width: 48,
+                width: 60,
                 child: Image.network(
-                  "https://cdn.motor1.com/images/mgl/VobQz/s1/10-carros-brasileiros-com-nomes-curiosos-no-exterior.jpg",
+                  url,
                   fit : BoxFit.fill
                 ),
               )),
@@ -45,8 +47,7 @@ class TitleInfoHome extends StatelessWidget {
             ],
           ),
           trailing: menuItemHome(context,view: view,
-            delete: delete,
-            edit: edit,)
+            edit: edit, delete: delete,)
         ),
       ],
     );

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 
-Widget Button({required String text ,required VoidCallback onPressed,
+Widget Button({required String text , VoidCallback? onPressed,
 Color? border, required Color backGroundColor, Color? colorText}){
 
   return Padding(
