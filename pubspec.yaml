@@ -37,10 +37,12 @@ dependencies:
   dio: ^4.0.4
   bloc_provider: ^0.8.0
   parse_server_sdk_flutter: ^3.1.0
+  device_preview: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -77,6 +79,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: mobCarback
+      fonts:
+        - asset: assets/fonts/OutBackMenu.ttf
     - family: mobCarIn
       fonts:
         - asset: assets/fonts/MobCarIn.ttf
@@ -84,6 +89,7 @@ flutter:
     - family: steeringWheel
       fonts:
         - asset: assets/fonts/SteeringWheel.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

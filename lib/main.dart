@@ -1,4 +1,5 @@
 import 'package:bloc_provider/bloc_provider.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:mob_car_2/presentation/bloc/bloc_validator.dart';
 import 'package:mob_car_2/ui/home_page/home_page.dart';
@@ -18,7 +19,9 @@ void main() async {
         debugShowCheckedModeBanner: false,
 
         home: BlocProvider<BlocValidator>(creator: (context,bloc)=>BlocValidator(),
-          child:  const HomePage(),
+          child:  DevicePreview(
+            enabled: false,//
+            builder: (context)=>const HomePage(),),
         )));
 }
 

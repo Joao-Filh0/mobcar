@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mob_car_2/ui/components/mobcar_icons.dart';
 
 class DrawerHome extends StatelessWidget {
   final Size size;
@@ -8,16 +9,30 @@ class DrawerHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      color: Colors.white,
+      color: Colors.black,
       width: size.width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Button"))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: steeringIcon,
+              ),
+
+
+        IconButton(
+        icon:   mobCarIconIn,
+        onPressed: () => Navigator.of(context).pop(),
+
+      )
+            ],
+          )
+
+         ,const  Text("Drawer Criado",style: TextStyle(color: Colors.white),)
         ],
       ),
     );

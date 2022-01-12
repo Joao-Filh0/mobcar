@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mob_car_2/domain/entities/price_entity.dart';
 
 Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) async {
-  TextStyle _textStyle = TextStyle(fontSize: 17.0);
+  final size = MediaQuery.of(context).size;
+  TextStyle _textStyle =  TextStyle(fontSize: size.width*0.03,overflow: TextOverflow.ellipsis);
   return showDialog<void>(
       context: context,
 
@@ -48,7 +49,8 @@ Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) a
                       Padding(
                         padding: const EdgeInsets.only(right: 40,bottom: 30),
                         child: Row(children: [
-                          Text(data.model,style:_textStyle),const Spacer(),Text(data.year.toString(),style:_textStyle ,)
+                          Text(data.model,style:_textStyle),
+                          const Spacer(),Text(data.year.toString(),style:_textStyle ,)
                         ],),
                       ),
                       Padding(
