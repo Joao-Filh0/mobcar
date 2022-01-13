@@ -57,26 +57,30 @@ Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) a
                         padding: const EdgeInsets.only(right: 40,bottom: 30),
                         child: Row(
                           children: [
-                          Text(data.brand,style:_textStyle),const Spacer(),Text(data.price,style:_textStyle)
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(data.brand,style:_textStyle),
+                              ],
+                            ),
+                          ),const Spacer(),Text(data.price,style:_textStyle)
                         ],),
                       ),
 
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: (){},
-                          child: const Text(
-                            "Reservar",
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
-                              shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(9.0),
-                                ),
-                              )),
+                      ElevatedButton(
+                        onPressed: (){},
+                        child: const Text(
+                          "Reservar",
                         ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                            shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9.0),
+                              ),
+                            )),
                       ),
                       
                     ],

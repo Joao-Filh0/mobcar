@@ -171,9 +171,7 @@ Future<void> registerCarHome(BuildContext context,
                               return Button(text : "Salvar",onPressed:
                               !snapshot.data!
                                   ? null : (){
-
-                                onPressed(
-                                   _data!);
+                                onPressed(_data!);
                               }, backGroundColor: Colors.black);
                             }
                           )

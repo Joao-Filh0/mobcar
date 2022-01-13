@@ -163,6 +163,9 @@ class _HomePageState extends State<HomePage>
       backgroundColor: color,
       duration: const Duration(seconds: 2),
     );
+    setState(() {
+
+    });
     _blocValidator.setHomeController.add(true);
 
 
