@@ -4,7 +4,7 @@ import 'package:mob_car_2/domain/entities/price_entity.dart';
 
 Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) async {
   final size = MediaQuery.of(context).size;
-  TextStyle _textStyle =  TextStyle(fontSize: size.width*0.03,overflow: TextOverflow.ellipsis);
+  TextStyle _textStyle =  TextStyle(fontSize: size.width*0.03,overflow: TextOverflow.visible);
   return showDialog<void>(
       context: context,
 
@@ -27,7 +27,7 @@ Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) a
                       Row(
                         children: [
                           const Padding(
-                            padding: const EdgeInsets.only(right: 3.0),
+                            padding: EdgeInsets.only(right: 3.0),
                             child: Icon(Icons.directions_car),
                           ),
                           const Text(
@@ -35,14 +35,14 @@ Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) a
                             style: TextStyle(fontSize : 20,fontWeight: FontWeight.bold),
                           ),
                           const Spacer(),
-                          IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.close))
+                          IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close))
                         ],
                       ),
                       ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8.0)),
                           child: Container(
-                            height: 130.0,
+                            height: size.height*0.15,
                             child: Image.network(data.urlImage, fit: BoxFit.fill),
                           )),
 
@@ -55,7 +55,8 @@ Future<void> reserveCarHome(BuildContext context, {required PriceEntity data}) a
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 40,bottom: 30),
-                        child: Row(children: [
+                        child: Row(
+                          children: [
                           Text(data.brand,style:_textStyle),const Spacer(),Text(data.price,style:_textStyle)
                         ],),
                       ),
